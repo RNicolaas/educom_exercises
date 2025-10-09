@@ -21,17 +21,15 @@ postbus:
  - postbusnummer 1
  - postcode 1
  - plaats 1
-persoon:
- - naam 1
- - taak 1-N
 taak:
  - naam 1
- - persoon 1-N
+ - afdeling 1
 contactpersoon:
  - naam 1
  - email 1
  - telefoonnummer 1
  - afdeling 1
+ - taak 1-N
 land:
  - naam 1
  - provincie N
