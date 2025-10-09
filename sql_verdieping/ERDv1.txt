@@ -1,0 +1,49 @@
+Leverancier:
+ - naam 1
+ - adres 1
+ - postbus 1
+ - email 1
+ - mobiel nummer 1
+ - vast nummer 1
+ - rubriek 1-N
+ - contactpersoon N
+ - optionele eigenschap 0-N
+optionele eigenschap:
+ - naam 1
+ - type 1
+ - waarde van eigenschap 1
+adres:
+ - straatnaam 1
+ - nummer 1
+ - postcode 1
+ - woonplaats 1
+postbus:
+ - postbusnummer 1
+ - postcode 1
+ - plaats 1
+persoon:
+ - naam 1
+ - taak 1-N
+taak:
+ - naam 1
+ - persoon 1-N
+contactpersoon:
+ - naam 1
+ - email 1
+ - telefoonnummer 1
+ - afdeling 1
+land:
+ - naam 1
+ - provincie N
+provincie:
+ - naam 1
+ - gemeente N
+gemeente:
+ - naam 1
+ - woonplaats N
+woonplaats:
+ - naam 1
+ - postcode N
+postcode:
+ - geo-locatie 1
+ - straatnaam 1
