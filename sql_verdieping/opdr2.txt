@@ -1,0 +1,105 @@
+countries:
+ - id
+ - code
+ - name
+ - display
+district:
+ - id
+ - country id
+ - code
+ - name
+ - display order
+commune:
+ - id
+ - district id
+ - name
+cities:
+ - id
+ - commune id
+ - name
+brands:
+ - id
+ - name
+companies:
+ - id
+ - name
+contacts:
+ - id
+ - supplier id
+ - department id
+ - contacttype
+ - name
+ - email
+ - telephone number
+departments:
+ - id
+ - name
+detaildefs:
+ - id
+ - vlevel
+ - group id
+ - display order
+ - properties
+ - property type id
+ - property def
+ - display name
+detail groups:
+ - id
+ - display order
+ - name
+hitcount:
+ - supplier id
+ - year
+ - month
+ - hitcount
+membertypes:
+ - id
+ - name
+ - sort order
+ - ulevel
+properties:
+ - id
+ - supplier id
+ - property type id
+ - content
+property types:
+ - id
+ - csvreg
+ - name
+ - prop type
+ - display
+ - is filter
+rubrieken:
+ - id
+ - parent
+ - display order
+ - name
+suppliers:
+ - id
+ - member type
+ - company
+ - name
+ - straat
+ - huisnummer
+ - postcode
+ - city id
+ - p adress
+ - p postcode
+ - p city id
+suppliers mhl rubriek view:
+ - id
+ - mhl suppliers id
+ - mhl rubriek view id
+yn properties:
+ - id
+ - supplier id
+ - property type id
+ - content
+lat long:
+ - id
+ - postcode
+ - lat
+ - long
+
+
+
