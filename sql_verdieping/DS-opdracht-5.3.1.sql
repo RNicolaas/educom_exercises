@@ -1,4 +1,4 @@
-CREATE VIEW [IF NOT EXISTS] DIRECTIE
+CREATE VIEW DIRECTIE
 AS
 SELECT c.supplier_id, c.name AS contact, c.contacttype AS functie, d.name AS department
 FROM mhl_contacts c
