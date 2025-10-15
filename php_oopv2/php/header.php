@@ -15,7 +15,7 @@ class header {
         //=======================================================================
         // Echos the header with title and stylesheet reference.
         //=======================================================================
-        echo '<head><title>' . htmlspecialchars($this->title) . '</title><link rel="stylesheet" href="' . $this->stylesheet . '"></head>';
+        echo '<head><title>' . htmlspecialchars($this->title) . "</title><link rel='stylesheet' href='" . $this->stylesheet . "'></head>";
     }
 }
 ?>

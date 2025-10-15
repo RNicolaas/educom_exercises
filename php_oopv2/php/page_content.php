@@ -12,41 +12,42 @@ class page_content {
         //=======================================================================
         $this->database = $database;
         $this->page_content_ids = $database->getPageContent($page_id);
-        
     }
 
     public function getContent(){
         for($i=0; $i<count($this->page_content_ids); $i++){
-            $this->page_content[] = $this->makeContent($this->page_content_ids[$i][0],$this->page_content_ids[$i][1])
+            $this->page_content[] = $this->makeContent($this->page_content_ids[$i][0],$this->page_content_ids[$i][1]);
         }
     }
 
-    private function makeContent($content_type_id,$content_id){
+    private function makeContent($content_id,$content_type_id){
         switch($content_type_id){
             case 1:
                 require_once "paragraph.php";
                 $content = new paragraph($this->database->getParagraph($content_id));
                 break;
             case 2:
-                //require_once "form.php";
-                //$content = new form($content_id);
+                require_once "form.php";
+                $content = new form($content_id, $this->database);
                 break;
             case 3:
-                //require_once "link_button.php";
-                //$content = new link_button($content_id);
+                require_once "button_factory.php";
+                $factory = new button_factory($this->database);
+                $content = $factory->getButton($content_id);
                 break;
             case 4:
                 require_once "head_text.php";
                 $content = new head_text($this->database->getHeadText($content_id));
                 break;
             case 5:
-                //require_once "paragraph.php";
-                //$content = new paragraph($this->database->getParagraph($content_id));
-                //break;
+                require_once "shop.php";
+                $content = new shop($this->database);
+                break;
             case 6:
-                //require_once "form.php";
-                //$content = new form($content_id);
-                //break;
+                require_once "item_factory.php";
+                $factory = new item_factory($this->database);
+                $content = $factory->getItem($content_id);
+                break;
             case 7:
                 //require_once "link_button.php";
                 //$content = new link_button($content_id);
@@ -60,7 +61,13 @@ class page_content {
                 $content = new paragraph('Something went wrong...');
                 break;
         }
-        $return($content);
+        return($content);
+    }
+
+    public function showContent(){
+        for($i=0; $i<count($this->page_content); $i++){
+            $this->page_content[$i]->showContent();
+        }
     }
 }
 ?>
