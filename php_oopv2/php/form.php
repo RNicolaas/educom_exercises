@@ -25,7 +25,6 @@ class form {
         for($i=0; $i<count($this->formline_list); $i++){
             $this->formline_list[$i]->showContent();
         }
-        echo '<button type="submit">Send</button>';
         echo '</form>';
     }
 }

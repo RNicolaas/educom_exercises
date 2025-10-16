@@ -8,8 +8,9 @@ class page {
     private $page_id;
     private $page_content;
     private $menu;
+    private $args;
 
-    public function __construct($database,$page_id){
+    public function __construct($database,$page_id,$args=[]){
         //=======================================================================
         // Constructs the header by getting the title and stylesheet from the 
         // database.
@@ -17,8 +18,9 @@ class page {
         [$title,$stylesheet,$footer] = $database->getBasicPage();
 
         $this->footer = $footer;
+        $this->args = $args;
         $this->header = new header($title,$stylesheet);
-        $this->page_content = new page_content($database,$page_id);
+        $this->page_content = new page_content($database,$page_id,$args);
         $this->menu = new menu($database,false);
         $this->page_content->getContent();
     }

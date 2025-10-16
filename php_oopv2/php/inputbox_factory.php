@@ -26,6 +26,10 @@ class inputbox_factory {
                 case 7:
                     $inputboxes[] = new inputbox('text','message','Message:');
                     break;
+                case 8:
+                    require_once "form_button.php";
+                    $inputboxes[] = new form_button('submit','message','Submit');
+                    break;
             }
         }
         return($inputboxes);
