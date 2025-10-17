@@ -1,57 +1,46 @@
 <?php
 class response {
-    private $request_type;
-    private $page;
-    private $action;
+    private $request;
     private $args;
+    private $user;
+    private $database;
+    private $session;
+    private $page;
 
-    public function __construct($request){
-        //=======================================================================
-        // Constructs the header by setting the button text and page id to link to.
-        //=======================================================================
-        $this->args = [];
-        getRequest();
+    public function __construct($request, $database, $session){
+        $this->request = $request;
+        $this->database = $database;
+        $this->session = $session;
+        $this->args = $this->request->getArgs();
+        $this->page = $this->request->getPage();
+        $this->user = $this->request->getUser();
+        $this->getResponse();
     }
 
     private function getResponse(){
         //=======================================================================
-        // determines the request.
+        // returns the page id and extra arguments when necessary.
         //=======================================================================
-        if(isset($_POST['page'])){
-            $this->request_type = 'post';
-            $this->page = $_POST['page'];
-        }else{
-            $this->request_type = 'get';
-            $this->page = $_GET['page'];
-            if(isset($_GET['additem'])){
-                $this->action = 'additem';
-                $this->args["item_id"] = $_GET['page'];
-            }
+        require_once "actions.php";
+        if($this->request->hasAction()){
+            $actions = new actions($this->database, $this->session, $this->user);
+            $this->args = $actions->doAction($this->request->getAction(),$this->args);
         }
-    }
-
-    public function getType(){
-        return($this->request_type);
+        if(isset($this->args['page'])){
+            $this->page = $this->args['page'];
+        }
     }
 
     public function getPage(){
         return($this->page);
     }
 
+    public function getUser(){
+        return($this->user);
+    }
+
     public function getArgs(){
         return($this->args);
-    }
-
-    public function getAction(){
-        return($this->action);
-    }
-
-    public function isAction(){
-        if(isset($this->action)){
-            return(true);
-        }else{
-            return(false);
-        }
     }
 }
 ?>

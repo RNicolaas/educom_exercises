@@ -19,5 +19,13 @@ class inputbox extends content {
         echo '<label for="message" style="vertical-align: top;">' . $this->text . '</label><br>';
         echo '<input type="' . $this->input_type . '" id="' . $this->id . '" name="' . $this->id . '" value="' . $this->value . '"><br>';
     }
+
+    public function getId(){
+        return($this->id);
+    }
+
+    public function getValue(){
+        return($this->value);
+    }
 }
 ?>

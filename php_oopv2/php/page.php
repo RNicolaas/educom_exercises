@@ -1,7 +1,4 @@
 <?php
-require_once "header.php";
-require_once "page_content.php";
-require_once "menu.php";
 class page {
     private $footer;
     private $header;
@@ -16,12 +13,17 @@ class page {
         // database.
         //=======================================================================
         [$title,$stylesheet,$footer] = $database->getBasicPage();
+        require_once "header.php";
+        require_once "page_content.php";
+        require_once "menu.php";
+        require_once "title.php";
 
         $this->footer = $footer;
         $this->args = $args;
         $this->header = new header($title,$stylesheet);
+        $this->title = new title($title);
         $this->page_content = new page_content($database,$page_id,$args);
-        $this->menu = new menu($database,false);
+        $this->menu = new menu($database,$args);
         $this->page_content->getContent();
     }
 
@@ -31,6 +33,7 @@ class page {
         //=======================================================================
         $this->beginDoc();
         $this->header->getHeader();
+        $this->title->showContent();
         $this->menu->showMenu();
         $this->page_content->showContent();
         $this->showFooter();

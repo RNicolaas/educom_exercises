@@ -5,16 +5,18 @@ class menu {
     private $loggedin;
     private $content;
     private $database;
+    private $args;
 
-    public function __construct($database,$loggedin){
+    public function __construct($database,$args){
         //=======================================================================
         // Constructs the header by setting the button text and page id to link to.
         //=======================================================================
         $this->database = $database;
+        $this->loggedin = $args['login'];
+        $this->args = $args;
         $this->button_list = [];
         $this->button_info = $database->getMenuContent();
         $this->getButtons();
-        $this->loggedin = $loggedin;
         $this->getMenu();
     }
 
@@ -26,7 +28,7 @@ class menu {
         $factory = new button_factory($this->database);
         for($i=0; $i<count($this->button_info); $i++){
             if($this->button_info[$i][1] == 'all' or ($this->button_info[$i][1] == 'login' and $this->loggedin) or ($this->button_info[$i][1] == 'logout' and !$this->loggedin)){
-                $this->button_list[] = $factory->getButton($this->button_info[$i][0]);
+                $this->button_list[] = $factory->getButton($this->button_info[$i][0],$this->args);
             }
         }
     }

@@ -1,6 +1,6 @@
 <?php
 require_once "content.php";
-class paragraph extends content {
+class title extends content {
     private $text;
 
     public function __construct($text,$color=''){
@@ -10,9 +10,9 @@ class paragraph extends content {
 
     public function showContent(){
         if($this->color != ''){
-            echo '<p style="color: ' . $this->color . ';">'.htmlspecialchars($this->text).'</p>';
+            echo '<h1 style="color: ' . $this->color . ';">'.htmlspecialchars($this->text).'</h1>';
         }else{
-            echo '<p>'.htmlspecialchars($this->text).'</p>';
+            echo '<h1>'.htmlspecialchars($this->text).'</h1>';
         }
     }
 }

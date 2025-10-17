@@ -16,7 +16,7 @@ class database {
         return($database);
     }
 
-    public function selectXfromY($x,$y){
+    private function selectXfromY($x,$y){
         //=======================================================================
         // Selects column x from table y and returns it.
         //=======================================================================
@@ -25,7 +25,7 @@ class database {
         return($result);
     }
 
-    public function selectXfromYwhereAisB($x,$y,$a,$b){
+    private function selectXfromYwhereAisB($x,$y,$a,$b){
         //=======================================================================
         // Selects column x from table y where a = b and returns it.
         //=======================================================================
@@ -34,7 +34,7 @@ class database {
         return($result);
     }
 
-    public function selectXfromYwhereAisBorderbyC($x,$y,$a,$b,$c,$asc=true){
+    private function selectXfromYwhereAisBorderbyC($x,$y,$a,$b,$c,$asc=true){
         //=======================================================================
         // Selects column x from table y where a = b ordered by c and returns it.
         //=======================================================================
@@ -43,6 +43,12 @@ class database {
         }else{
             $query = "SELECT " . $x . " FROM " . $y . " WHERE ". $a . " = " . $b . " ORDER BY " . $c . " DESC ;";
         }
+        $result = $this->database->query($query);
+        return($result);
+    }
+
+    private function selectXfromYwhereAisBandCisD($x,$y,$a,$b,$c,$d){
+        $query = "SELECT " . $x . " FROM " . $y . " WHERE ". $a . " = '" . $b . "' AND " . $c . " = '" . $d . "' ;";
         $result = $this->database->query($query);
         return($result);
     }
@@ -150,6 +156,55 @@ class database {
         $ids = [];
         while($row = $result->fetch_assoc()){
             $ids[] = $row['id'];
+        }
+        return($ids);
+    }
+
+    public function getLogin($email,$password){
+        $result = $this->selectXfromYwhereAisBandCisD('id,name','users','email',$email,'password',$password);
+        if($row = $result->fetch_assoc()){
+            return([$row['id'],$row['name']]);
+        }else{
+            return([false,false]);
+        }
+    }
+
+    public function registerInDatabase($name,$email,$password){
+        //=======================================================================
+        // Registers the name, email and password into the database and returns 
+        // the assigned id.
+        //=======================================================================
+        $registration_query = "INSERT INTO users (name,email,password) VALUES ('".$name."','".$email."','".$password."');";
+        $result = $this->database->query($registration_query);
+        $id_query = "SELECT id FROM users WHERE email='" . $email . "';";
+        $result = $this->database->query($id_query);
+        $row = $result -> fetch_assoc();
+        $id = $row['id'];
+        return($id);
+    }
+
+    public function putContactRequestInDatabase($user_id,$name,$email,$message){
+        $registration_query = "INSERT INTO contact_requests (name,email,message,user_id) VALUES ('".$name."','".$email."','".$message."',".$user_id.");";
+        $result = $this->database->query($registration_query);
+    }
+
+    public function putOrderItemInDatabase($order_id,$user_id,$item_id,$amount){
+        $registration_query = "INSERT INTO orders (order_id,user_id,item_id,amount) VALUES ('".$order_id."','".$user_id."','".$item_id."',".$amount.");";
+        $result = $this->database->query($registration_query);
+    }
+
+    public function getMaxValue($table,$column){
+        $query = "SELECT MAX(" . $column . ") AS max FROM " . $table . ";";
+        $result = $this->database->query($query);
+        $row = $result->fetch_assoc();
+        return($row['max']);
+    }
+
+    public function getValidationIds($formline_id){
+        $result = $this->selectXfromYwhereAisB('validation_id','formline_validations','formline_id',$formline_id);
+        $ids = [];
+        while($row = $result->fetch_assoc()){
+            $ids[] = $row['validation_id'];
         }
         return($ids);
     }

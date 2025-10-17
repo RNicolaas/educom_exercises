@@ -21,5 +21,21 @@ class formline {
             $this->inputbox_list[$i]->showContent();
         }
     }
+
+    public function getId(){
+        return($this->formline_id);
+    }
+
+    public function getIBs(){
+        return($this->inputbox_list);
+    }
+
+    public function setValues($args){
+        for($i=0; $i<count($this->inputbox_list); $i++){
+            if(isset($args[$this->inputbox_list[$i]->getId()])){
+                $this->inputbox_list[$i]->setValue($args[$this->inputbox_list[$i]->getId()]);
+            }
+        }
+    }
 }
 ?>

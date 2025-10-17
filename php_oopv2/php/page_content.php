@@ -4,6 +4,7 @@ class page_content {
     private $database;
     private $page_content;
     private $page_content_ids;
+    private $args;
 
     public function __construct($database,$page_id,$args=[]){
         //=======================================================================
@@ -17,6 +18,14 @@ class page_content {
     }
 
     public function getContent(){
+        if(isset($this->args['text'])){
+            require_once "paragraph.php";
+            $this->page_content[] = new paragraph($this->args['text'],'green');
+        }
+        if(isset($this->args['form_error'])){
+            require_once "paragraph.php";
+            $this->page_content[] = new paragraph($this->args['form_error'],'red');
+        }
         for($i=0; $i<count($this->page_content_ids); $i++){
             $this->page_content[] = $this->makeContent($this->page_content_ids[$i][0],$this->page_content_ids[$i][1]);
         }
@@ -30,7 +39,7 @@ class page_content {
                 break;
             case 2:
                 require_once "form.php";
-                $content = new form($content_id, $this->database);
+                $content = new form($content_id, $this->database, $this->args);
                 break;
             case 3:
                 require_once "button_factory.php";
@@ -60,7 +69,7 @@ class page_content {
                 //break;
             case 8:
                 require_once "session.php";
-                $this->session = new session();
+                $this->session = new session_handler();
                 require_once "cart.php";
                 $content = new cart($this->database, $this->session);
                 break;

@@ -11,13 +11,21 @@ class cart extends content_list{
         // Constructs the cart by getting all the items 
         // from the ids in the session.
         //================================================
-        [$this->item_ids,$this->amounts] = $session->getItemsInCart();
         $this->list_id = 'cart';
-        require_once "item_factory.php";
-        $factory = new item_factory($database);
-        $this->list = [];
-        for($i=0; $i<count($this->item_ids); $i++){
-            $this->list[] = $factory->getItem($this->item_ids[$i],amount: $amounts);
+        [$this->item_ids,$this->amounts] = $session->getItemsInCart();
+        if($this->item_ids == []){
+            require_once "paragraph.php";
+            $this->list = [];
+            $this->list[] = new paragraph($database->getParagraph(6));
+        }else{
+            require_once "item_factory.php";
+            $factory = new item_factory($database);
+            $this->list = [];
+            for($i=0; $i<count($this->item_ids); $i++){
+                $this->list[] = $factory->getItem($this->item_ids[$i],amount: $this->amounts[$this->item_ids[$i]]);
+            }
+            require_once "form.php";
+            $this->list[] = new form(4,$database);
         }
         parent::__construct($this->list, $this->list_id);
     }

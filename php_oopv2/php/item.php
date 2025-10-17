@@ -39,10 +39,10 @@ class item extends content{
         }
         echo "<p id='price'>€ " . $this->price . "\n </p>";
         if ($this->itempage){
-            echo "<p>" . $this->description . "\n </p>";
+            echo "<p id='item_description'>" . $this->description . "\n </p>";
         }
         if($this->amount != 0){
-            "<p> Amount: " . $this->amount . "\n </p>";
+            echo "<p id='item_amount'> Amount: " . $this->amount . "\n </p>";
         }
     }
 }
